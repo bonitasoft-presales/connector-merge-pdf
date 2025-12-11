@@ -15,6 +15,10 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.build.timestamp.format>yyyy.MM.dd-hh.mm</maven.build.timestamp.format>
 
+        <!-- Github-->
+        <github.owner>bonitasoft-presales</github.owner>
+        <github.repo>${project.artifactId}</github.repo>
+
         <!-- Connector -->
         <connector-definition-id>${project.artifactId}</connector-definition-id>
         <connector-definition-version>1.0.0</connector-definition-version>
@@ -175,5 +179,22 @@
             </plugin>
         </plugins>
     </build>
-
+    <scm>
+        <url>https://github.com/${github.owner}/${github.repo}</url>
+        <developerConnection>scm:git:${project.scm.url}.git</developerConnection>
+        <connection>scm:git:${project.scm.url}.git</connection>
+        <tag>HEAD</tag>
+    </scm>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>github</id>
+            <name>Github Package</name>
+            <url>https://maven.pkg.github.com/${github.owner}/${github.repo}</url>
+        </snapshotRepository>
+        <repository>
+            <id>github</id>
+            <name>Github Package</name>
+            <url>https://maven.pkg.github.com/${github.owner}/${github.repo}</url>
+        </repository>
+    </distributionManagement>
 </project>
