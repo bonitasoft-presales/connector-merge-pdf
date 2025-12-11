@@ -1,5 +1,7 @@
 name: Build
-
+concurrency:
+  group: deploy-sca-${{ github.ref }}
+  cancel-in-progress: true
 on:
   push:
     branches: [ main ]

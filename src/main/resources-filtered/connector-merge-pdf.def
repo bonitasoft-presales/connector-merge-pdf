@@ -7,9 +7,10 @@
 
     <!-- Connector inputs -->
     <input mandatory="true" name="documents" type="java.util.List"/>
+    <input mandatory="true" name="outputFileName" type="java.lang.String"/>
 
     <!-- Connector outputs -->
-    <output name="mergedDocument" type="org.bonitasoft.engine.bpm.document.Document"/>
+    <output name="mergedDocument" type="org.bonitasoft.engine.bpm.document.DocumentValue"/>
 
     <!--
        Pages and widgets to use the connector in the Bonita Studio.
@@ -20,5 +21,6 @@
     -->
     <page id="inputPage">
         <widget xsi:type="definition:Array" id="documentsWidget" inputName="documents"/>
+        <widget xsi:type="definition:Text" id="outputFileNameWidget" inputName="outputFileName"/>
     </page>
 </definition:ConnectorDefinition>
