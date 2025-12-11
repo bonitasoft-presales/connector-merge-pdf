@@ -12,7 +12,7 @@ public class MergePDF extends AbstractConnector {
 
     private static final Logger LOGGER = Logger.getLogger(MergePDF.class.getName());
 
-    static final String yesDOCUMENTS_INPUT = "documents";
+    static final String DOCUMENTS_INPUT = "documents";
     static final String MERGED_DOCUMENT_OUTPUT = "mergedDocument";
 
     @Override
