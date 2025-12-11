@@ -1,7 +1,9 @@
 package com.bonitasoft.presales.connector.mergepdf;
 
+import java.util.List;
 import java.util.logging.Logger;
 
+import org.bonitasoft.engine.bpm.document.Document;
 import org.bonitasoft.engine.connector.AbstractConnector;
 import org.bonitasoft.engine.connector.ConnectorException;
 import org.bonitasoft.engine.connector.ConnectorValidationException;
@@ -10,52 +12,43 @@ public class MergePDF extends AbstractConnector {
 
     private static final Logger LOGGER = Logger.getLogger(MergePDF.class.getName());
 
-    static final String DEFAULT_INPUT = "defaultInput";
-    static final String DEFAULT_OUTPUT = "defaultOutput";
+    static final String yesDOCUMENTS_INPUT = "documents";
+    static final String MERGED_DOCUMENT_OUTPUT = "mergedDocument";
 
-    /**
-     * Perform validation on the inputs defined on the connector definition (src/main/resources/connector-merge-pdf.def)
-     * You should: 
-     * - validate that mandatory inputs are presents
-     * - validate that the content of the inputs is coherent with your use case (e.g: validate that a date is / isn't in the past ...)
-     */
     @Override
     public void validateInputParameters() throws ConnectorValidationException {
-        checkMandatoryStringInput(DEFAULT_INPUT);
+        checkMandatoryDocumentsInput();
     }
 
-    protected void checkMandatoryStringInput(String inputName) throws ConnectorValidationException {
-        try {
-            String value = (String) getInputParameter(inputName);
-            if (value == null || value.isEmpty()) {
-                throw new ConnectorValidationException(this,
-                        String.format("Mandatory parameter '%s' is missing.", inputName));
-            }
-        } catch (ClassCastException e) {
-            throw new ConnectorValidationException(this, String.format("'%s' parameter must be a String", inputName));
+    protected void checkMandatoryDocumentsInput() throws ConnectorValidationException {
+        List<?> documents = (List<?>) getInputParameter(DOCUMENTS_INPUT);
+        if (documents == null || documents.isEmpty()) {
+            throw new ConnectorValidationException(this,
+                    String.format("Mandatory parameter '%s' is missing or empty.", DOCUMENTS_INPUT));
+        }
+        if (documents.size() < 2) {
+            throw new ConnectorValidationException(this,
+                    "At least 2 documents are required to merge.");
         }
     }
 
-    /**
-     * Core method: 
-     * - Execute all the business logic of your connector using the inputs (connect to an external service, compute some values ...).
-     * - Set the output of the connector execution. If outputs are not set, connector fails.
-     */
     @Override
     protected void executeBusinessLogic() throws ConnectorException {
-        LOGGER.info(String.format("Default input: %s", getInputParameter(DEFAULT_INPUT)));
-        setOutputParameter(DEFAULT_OUTPUT, String.format("%s - output", getInputParameter(DEFAULT_INPUT)));
-    }
-    
-    /**
-     * [Optional] Open a connection to remote server
-     */
-    @Override
-    public void connect() throws ConnectorException{}
+        List<Document> documents = (List<Document>) getInputParameter(DOCUMENTS_INPUT);
+        LOGGER.info(String.format("Merging %d documents", documents.size()));
 
-    /**
-     * [Optional] Close connection to remote server
-     */
+        // TODO: Implement PDF merging logic
+        // For now, return the first document as placeholder
+        Document mergedDocument = documents.get(0);
+
+        setOutputParameter(MERGED_DOCUMENT_OUTPUT, mergedDocument);
+    }
+
     @Override
-    public void disconnect() throws ConnectorException{}
+    public void connect() throws ConnectorException {
+    }
+
+    @Override
+    public void disconnect() throws ConnectorException {
+    }
 }
