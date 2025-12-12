@@ -20,7 +20,7 @@
        - Page and widget descriptions can be defined in the properties files (optional)
     -->
     <page id="inputPage">
-        <widget xsi:type="definition:Array" id="documentsWidget" inputName="documents"/>
+        <widget xsi:type="definition:Array" id="documentsWidget" inputName="documents" cols="1"/>
         <widget xsi:type="definition:Text" id="outputFileNameWidget" inputName="outputFileName"/>
     </page>
 </definition:ConnectorDefinition>
